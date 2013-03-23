@@ -6,10 +6,15 @@ define([
 	'underscore',
 	'backbone',
 	'app',
-	'models/app/configModel',
+	
 	'models/app/booksIndexModel',
 	'models/app/catalogIndexModel',
-	'text!templates/chrome.html'], function($, _, Backbone, App, ConfigModel, BooksIndexModel, CatalogIndexModel, mainTemplate, window) {
+
+	
+	'text!templates/dashboard/chrome.html'
+	]
+
+	, function($, _, Backbone, App, BooksIndexModel, CatalogIndexModel, mainTemplate, window) {
 
 
 	var ChromeView = Backbone.View.extend({
@@ -20,46 +25,36 @@ define([
 		// initialize
 		initialize: function(options) {
 			console.log("ChromeView::initialize");
-
-
-			// load the cofig file.
-			// no matters if they say should be loadde in page.
-			this.config = new ConfigModel();
-			this.config.on("add fetch reset change",this.loadIndexes,this);
-			this.config.fetch();
-
-
 		},
 
 
 
 
-		// load the repo configuration files
-		loadIndexes: function(){
 
 
-			console.log("loadIndexes");
+		// Load the repo configuration files
+		loadIndexes: function() {
 
-			// check if the config file loaded.
-			console.log(this.config);
-			console.log(this.config.get('booksIndex'));
-			console.log(this.config.get('catalogIndex'));
-			//console.log(this.config.attributes);
-
+			console.log("ChromeView::loadIndexes");
 
 			// Load the books index.
 			this.booksModel = new BooksIndexModel({
 				url: this.config.get('booksIndex')
 			});
-			this.booksModel.fetch();
 
+			this.booksModel.on("add fetch reset change", this.renderBooks, this);
+			this.booksModel.fetch();
 
 
 			// Load Catalog Index
 			this.catalogModel = new CatalogIndexModel({
 				url: this.config.get('catalogIndex')
 			});
+
+			this.catalogModel.on("add fetch reset change", this.renderCatalog, this);
+
 			this.catalogModel.fetch();
+
 
 		},
 
@@ -78,16 +73,25 @@ define([
 			this.$el.html(mainTemplate);
 
 
-
-		},
-
-
-
-		renderBook: function() {
-
+			/*
+			this.renderDashboard();
+			this.renderCatalog();
+			this.renderBooks();
+			*/
 
 
 		},
+
+
+
+		renderDashboard: function() {
+			console.log("ChromeView::renderDashboard");
+
+			this.dashboard = new DashBoardView({
+				el: "#dashboard"
+			});
+		},
+
 
 
 

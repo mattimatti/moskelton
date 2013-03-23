@@ -10,11 +10,17 @@ define([
 
 	var CatalogIndexModel = Backbone.Model.extend({
 
+
 		initialize: function(options) {
-
 			this.url = options.url;
+		},
 
-		}
+
+		parse: function(response) {
+			
+			return response.catalogindex;
+		},
+
 
 
 

@@ -10,11 +10,20 @@ define([
 
 	var BooksIndexModel = Backbone.Model.extend({
 
+
 		initialize: function(options) {
-
 			this.url = options.url;
+		},
 
-		}
+
+
+		parse: function(response) {
+			//console.log("parse",response);
+			return response.booksindex;
+		},
+
+
+	
 
 
 	});
