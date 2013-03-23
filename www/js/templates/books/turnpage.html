@@ -1,0 +1,13 @@
+<% _.each(pages, function(page){ %>
+ 
+   <div class="pageholder">
+   		<img class="pageimg" src="data/tablet/<%= page.get('name') %>"/>
+   	 <% _.each(page.get("areas"), function(area){ %>
+   	 		<div class="sensor" style="top:<%= area.top %>px; left:<%= area.left %>px;width:<%= area.width %>px; height:<%= area.height %>px;" data-modelid="<%= page.get('id') %>"></div>
+   	  <% }); %>
+
+   </div>
+ 
+ <% }); %>
+
+

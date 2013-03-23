@@ -1,0 +1,10 @@
+In order to test the template run simple server
+
+nserver -p 8083
+
+
+Setup the server:
+
+Requires node & npm
+
+npm install -g nserver

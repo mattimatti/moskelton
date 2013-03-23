@@ -1,0 +1,6 @@
+<config>
+<key name="foo">bar</key>
+<key name="repo">../repo</key>
+<key name="booksIndex">/../repo/books.json</key>
+<key name="catalogIndex">/../repo/books.json</key>
+</config>

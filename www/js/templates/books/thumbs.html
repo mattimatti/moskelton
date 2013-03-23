@@ -1,0 +1,11 @@
+
+	<a href="#" class="prev prev-navigation">&lsaquo;</a>
+    <a href="#" class="next next-navigation">&rsaquo;</a>
+
+    <div class="carousel carousel-navigation" >
+	 <ul>
+	 	<% _.each(pages, function(page,index){ %>
+	   		<li data-id="<%=index %>" class="thumb"> <img src="data/thumbs/<%= page.get('name') %>"/></li>
+		<% }); %>
+	</ul>
+</div>
