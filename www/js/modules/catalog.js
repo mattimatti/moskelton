@@ -6,16 +6,44 @@ define([
 	'underscore',
 	'backbone',
 	"app",
-	'views/catalog/catalog'], function($, _, Backbone, app, CatalogView) {
+	'modules/catalog/views/catalog'], function($, _, Backbone, app, CatalogView) {
 
 
 	var Catalog = app.module();
 
-	Catalog.Views.CatalogView = CatalogView;
+
+	// the local router
+	var CatalogController = Backbone.Router.extend({
 
 
-	//BookShelf.Views.BookShelf = {};
-	//BookShelf.Models.Book = {};
+		routes:{
+
+			'shosho' :"indexAction"
+
+		},
+
+
+
+
+		initialize: function() {
+
+			console.log("Catalog:Index:initialize");
+
+		},
+
+		indexAction: function(params) {
+			console.log("Catalog:Index:indexAction",params);
+		}
+
+
+	});
+
+
+
+
+
+
+	Catalog.Controller = new CatalogController();
 
 
 

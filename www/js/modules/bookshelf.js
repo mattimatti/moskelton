@@ -5,14 +5,47 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	"app",
-	'views/bookshelf/bookshelf'], function($, _, Backbone, app, BookShelfView) {
+	'app',
+	'modules/bookshelf/views/bookshelf'], function($, _, Backbone, app, BookShelfView) {
 
-	console.log(app);
+
 
 	var BookShelf = app.module();
 
-	BookShelf.Views.BookShelfView = BookShelfView;
+
+
+	var BookShelfController = Backbone.Router.extend({
+
+		initialize: function() {
+
+			console.log("BookShelf:Index:initialize");
+
+		},
+
+		indexAction: function(params) {
+			console.log("BookShelf:Index:indexAction",params);
+		},
+
+
+		pepeAction :function(params){
+			console.log("BookShelf:Index:pepeAction",params);
+		}
+
+
+	});
+
+
+
+
+	// exports
+
+
+
+	BookShelf.Controller = new BookShelfController();
+
+
+
+	//BookShelf.Views.BookShelfView = BookShelfView;
 	//BookShelf.Views.BookShelf = {};
 	//BookShelf.Models.Book = {};
 

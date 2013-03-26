@@ -5,7 +5,6 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'app',
 	
 	'models/app/booksIndexModel',
 	'models/app/catalogIndexModel',
@@ -17,7 +16,7 @@ define([
 
 	]
 
-	, function($, _, Backbone, App, BooksIndexModel, CatalogIndexModel, mainTemplate, strings) {
+	, function($, _, Backbone, BooksIndexModel, CatalogIndexModel, mainTemplate, strings) {
 
 
 	var Layout = Backbone.View.extend({

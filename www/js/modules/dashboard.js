@@ -5,16 +5,46 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	"app",
-	'views/dashboard/dashboard'], function($, _, Backbone, App, DashboardView) {
+	'app',
+	'modules/dashboard/views/dashboard'], function($, _, Backbone, app, DashboardView) {
 
 
-	var Dashboard = App.module();
+	var Dashboard = app.module();
 
-		Dashboard.Views.DashboardView = DashboardView;
-	//BookShelf.Views.BookShelf = {};
-	//BookShelf.Models.Book = {};
 
+
+	// the local Controller.
+	var DashboardController = Backbone.Router.extend({
+
+
+
+		initialize: function() {
+
+			console.log("Dashboard:Index:initialize");
+
+		},
+
+
+
+		indexAction: function(params) {
+			console.log("Dashboard:Index:indexAction",params);
+
+
+		}
+
+
+	});
+
+
+
+
+
+
+
+
+
+
+	Dashboard.Controller = new DashboardController();
 
 
 	return Dashboard;

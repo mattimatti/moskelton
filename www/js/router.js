@@ -7,17 +7,12 @@ define([
   'underscore',
   'backbone',
 
-
-  'app',
-  'models/app/configModel',
-  'views/app/layout',
-
   'modules/bookshelf',
   'modules/catalog',
   'modules/dashboard'
 
 
-], function($, _, Backbone, app, ConfigModel, Layout, BookShelf, Catalog, DashBoard) {
+], function($, _, Backbone, BookShelf, Catalog, DashBoard) {
 
 
 
@@ -25,35 +20,23 @@ define([
 
 
 
-    app : app,
+    defaultModule: "dashboard",
 
 
 
-    // initialize the router.
-    initialize: function() {
-
-      console.log('initialize');
-
-      this.loadConfig();
-
-      return this;
-
-
-    },
+   
 
 
 
-    // load a configuration file.
-    loadConfig: function() {
+    // the modules
+    modules: {
 
-
-      var config = new ConfigModel();
-      config.on("add fetch reset change", this.initRouting,this);
-      config.fetch();
-
-
+      "bookshelf": BookShelf,
+      "catalog": Catalog,
+      "dashboard": DashBoard
 
     },
+
 
 
     // startup routing
@@ -61,82 +44,93 @@ define([
 
       console.log('initRouting');
 
-      this.render();
-
       Backbone.history.start();
 
     },
 
 
 
-    // Define the routes
+    // Define the routes in a Zend Fashion
     routes: {
-      'catalog/:product': 'catalogAction',
-      'bookshelf/:book': 'bookShelfAction',
-      'bookshelf': 'bookShelfAction',
-      'catalog': 'catalogAction',
-      '*actions': 'defaultAction'
-    },
 
-
-
-    // the main layout of this app.
-    layout : new Layout({ el: "#app" }),
-
-
-
-
-    // the subviews
-    views: {
-
-      "bookshelf": new BookShelf.Views.BookShelfView({
-        el: "#bookshelf"
-      }),
-      "catalog": new Catalog.Views.CatalogView({
-        el: "#catalog"
-      }),
-      "dashboard": new DashBoard.Views.DashboardView({
-        el: "#dashboard"
-      })
+      'bookshelf*allroute': 'bookshelfRoute',
+      'catalog*allroute': 'catalogRoute',
+      '*allroute': 'defaultRoute'
 
     },
 
 
 
-    // enter the bookshelf
-    bookShelfAction: function(book) {
-      console.log("bookShelfAction:", book);
+    // enter the bookshelfRoute
+    bookshelfRoute: function(allroute) {
+
+      allroute = allroute || "index/index";
+
+      this._enrouteToModule("bookshelf", allroute);
+
     },
 
 
 
-    // enter the catalog
-    catalogAction: function(product) {
-      console.log("catalogAction:", product);
+    // enter the catalogRoute
+    catalogRoute: function(allroute) {
+
+      allroute = allroute || "index/index";
+
+      this._enrouteToModule("catalog", allroute);
+
     },
 
 
 
-    // enter the dashboard
-    defaultAction: function(actions) {
-      // We have no matching route, lets just log what the URL was
-      console.log('defaultAction:', actions);
+    // enter the defaultRoute
+    defaultRoute: function(allroute) {
+
+      allroute = allroute || "index/index";
+
+      this._enrouteToModule(this.defaultModule, allroute);
+
+
     },
 
 
 
-    // render the 
-    render: function() {
+    _enrouteToModule: function(module, allroute) {
+
+      var params,_params,i;
+
+      var routeArray = allroute.split("/");
+      if(routeArray[0] === ""){
+        routeArray[0] = "index";
+      }
 
 
-      this.layout.render();
+      var moduleName = module;
+      var controllerName = routeArray[0];
+      var actionName = routeArray[1];
 
 
-      // init views
-      _.each(this.views, function(view) {
-        view.render();
-      });
+      params = [];
+      _params = routeArray.splice(2);
 
+      for (i = 0; i < _params.length; i++) {
+        params[_params[i]] = _params[i+1];
+        i++;
+      }
+
+
+      if(!this.modules[moduleName]){
+          throw "module "+moduleName+" doesn't exist";
+      }
+
+      if(!this.modules[moduleName].Controller){
+          throw "controller  in module "+moduleName+" doesn't exist";
+      }
+      if(!this.modules[moduleName].Controller[actionName + "Action"]){
+          throw "action: "+actionName+" in module "+moduleName+".Controller doesn't exist";
+      }
+
+      this.modules[module].Controller[actionName + "Action"](params);
 
 
     }

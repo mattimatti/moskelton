@@ -6,7 +6,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'views/catalog/menu',
+	'modules/catalog/views/menu',
 	'text!templates/catalog/catalog.html'
 
 ], function($, _, Backbone, MenuView, htmlTemplate) {

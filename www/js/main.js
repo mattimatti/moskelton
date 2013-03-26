@@ -42,13 +42,9 @@ require.config({
 // Load our app module and pass it to our definition function
 require([
 
-	'app', 'router'], function(app, Router) {
-
+	'app','router'], function(app, Router) {
 	console.log("main");
-	// The "app" dependency is passed in as "App"
 	app.router = new Router();
-
-
 	app.main();
 
 });
