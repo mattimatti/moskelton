@@ -6,16 +6,67 @@ define([
   'jquery',
   'underscore',
   'backbone',
+
+
+  'app',
   'models/app/configModel',
-  'views/chrome',
-  'views/catalog/catalog',
-  'views/app/bookshelf'
+  'views/app/layout',
 
-  ], function($, _, Backbone, ConfigModel, ChromeView, CatalogView,BookShelfView) {
+  'modules/bookshelf',
+  'modules/catalog',
+  'modules/dashboard'
+
+
+], function($, _, Backbone, app, ConfigModel, Layout, BookShelf, Catalog, DashBoard) {
 
 
 
-  var AppController = Backbone.Router.extend({
+  var Router = Backbone.Router.extend({
+
+
+
+    app : app,
+
+
+
+    // initialize the router.
+    initialize: function() {
+
+      console.log('initialize');
+
+      this.loadConfig();
+
+      return this;
+
+
+    },
+
+
+
+    // load a configuration file.
+    loadConfig: function() {
+
+
+      var config = new ConfigModel();
+      config.on("add fetch reset change", this.initRouting,this);
+      config.fetch();
+
+
+
+    },
+
+
+    // startup routing
+    initRouting: function() {
+
+      console.log('initRouting');
+
+      this.render();
+
+      Backbone.history.start();
+
+    },
+
 
 
     // Define the routes
@@ -29,112 +80,72 @@ define([
 
 
 
+    // the main layout of this app.
+    layout : new Layout({ el: "#app" }),
 
-    // enter the bookshelf
-    bookShelfAction: function(book) {
 
-      console.log("bookShelfAction:", book);
 
-      var bookshelf = new BookShelfView({
+
+    // the subviews
+    views: {
+
+      "bookshelf": new BookShelf.Views.BookShelfView({
         el: "#bookshelf"
-      });
-      bookshelf.render();
-
+      }),
+      "catalog": new Catalog.Views.CatalogView({
+        el: "#catalog"
+      }),
+      "dashboard": new DashBoard.Views.DashboardView({
+        el: "#dashboard"
+      })
 
     },
 
+
+
+    // enter the bookshelf
+    bookShelfAction: function(book) {
+      console.log("bookShelfAction:", book);
+    },
 
 
 
     // enter the catalog
     catalogAction: function(product) {
-
       console.log("catalogAction:", product);
-      var catalog = new CatalogView({
-        el: "#catalog"
-      });
-      catalog.render();
-      
     },
-
-
 
 
 
     // enter the dashboard
     defaultAction: function(actions) {
       // We have no matching route, lets just log what the URL was
-      console.log('No route:', actions);
+      console.log('defaultAction:', actions);
+    },
 
-      var main = new ChromeView({
-        el: "#app"
+
+
+    // render the 
+    render: function() {
+
+
+      this.layout.render();
+
+
+      // init views
+      _.each(this.views, function(view) {
+        view.render();
       });
-      main.render();
+
 
 
     }
-
-
-
 
   });
 
 
 
-  var initRouting = function(){
-
-
-    var app_router = new AppController();
-    Backbone.history.start();
-
-  };
-
-
-
-
-
-  var initConfig = function(){
-
-      // initialize config;
-      var config= new ConfigModel();
-          config.on("add fetch reset change", initRouting);
-          config.fetch();
-  };
-
-
-
-
-
-  // Router initialization.
-  var initialize = function() {
-
-    console.log('AppRouter::initialize');
-
-    initConfig();
-
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  return {
-    initialize: initialize
-  };
+  return Router;
 
 
 });

@@ -4,21 +4,31 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
-  'router', 
-], function($, _, Backbone, Router){
-	
-	
-  var initialize = function(){
-    console.log("App:ininitialize");
-    // Pass in our Router module and call it's initialize function
-    Router.initialize();
-    
-  };
+  'backbone'], function($, _, Backbone) {
 
-  return {
-    initialize: initialize
-  };
+  var app = {};
 
-  
+  app = _.extend(app, {
+
+    // create modular structure
+    module: function(additionalProps) {
+      return _.extend({
+        Views: {}
+      }, additionalProps);
+    },
+
+
+    main: function(){
+
+    }
+
+
+
+
+  }, Backbone.Events);
+
+
+  return app;
+
+
 });

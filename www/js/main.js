@@ -17,7 +17,7 @@ require.config({
 
 		'turn': ['jquery'],
 
-		'turn_zoom': ['jquery','turn'],
+		'turn_zoom': ['jquery', 'turn'],
 
 		'jcarousel': ['jquery'],
 
@@ -28,16 +28,27 @@ require.config({
 			deps: ["underscore", "jquery"],
 			exports: "Backbone"
 		}
+	},
+
+
+
+	i18n: {
+		locale: 'fr-fr'
 	}
+
 });
 
 
 // Load our app module and pass it to our definition function
 require([
 
-'app', ], function(App) {
+	'app', 'router'], function(app, Router) {
 
+	console.log("main");
 	// The "app" dependency is passed in as "App"
-	App.initialize();
+	app.router = new Router();
+
+
+	app.main();
 
 });

@@ -5,8 +5,9 @@ define([
 
 'jquery',
 'underscore',
-'backbone'
-], function($, _, Backbone) {
+'backbone',
+'text!templates/catalog/menu.html'
+], function($, _, Backbone,htmlTemplate) {
 
 
 	var MenuView = Backbone.View.extend({
@@ -27,6 +28,9 @@ define([
 
 			console.log("MenuView:render");
 
+			// Render the template
+			var compiledTemplate = _.template(htmlTemplate, {});
+			this.$el.html(compiledTemplate);
 
 
 			

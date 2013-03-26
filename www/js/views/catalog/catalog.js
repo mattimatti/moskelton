@@ -6,7 +6,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'views/catalog/menu'], function($, _, Backbone, MenuView) {
+	'views/catalog/menu',
+	'text!templates/catalog/catalog.html'
+
+], function($, _, Backbone, MenuView, htmlTemplate) {
 
 
 	var CatalogView = Backbone.View.extend({
@@ -15,8 +18,6 @@ define([
 
 		initialize: function() {
 			console.log("CatalogView:initialize");
-
-
 		},
 
 
@@ -25,9 +26,15 @@ define([
 
 			console.log("CatalogView:render");
 
-			this.menu = new MenuView(
+			// Render the template
+			var compiledTemplate = _.template(htmlTemplate, {});
+			this.$el.html(compiledTemplate);
 
-			);
+			this.menu = new MenuView({
+				el: "#catalogmenu"
+			});
+
+			this.menu.render();
 
 
 
