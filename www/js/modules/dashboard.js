@@ -17,6 +17,9 @@ define([
 	var DashboardController = Backbone.Router.extend({
 
 
+		views: {},
+
+
 
 		initialize: function() {
 
@@ -29,8 +32,17 @@ define([
 		indexAction: function(params) {
 			console.log("Dashboard:Index:indexAction",params);
 
+			
+			var index = new DashboardView({el:"#dashboard"});
+				index.render();
+
 
 		}
+
+
+
+
+
 
 
 	});

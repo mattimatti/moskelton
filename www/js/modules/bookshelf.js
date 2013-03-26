@@ -24,13 +24,10 @@ define([
 
 		indexAction: function(params) {
 			console.log("BookShelf:Index:indexAction",params);
-		},
 
-
-		pepeAction :function(params){
-			console.log("BookShelf:Index:pepeAction",params);
+			var index = new BookShelfView({el:"#bookshelf"});
+				index.render();
 		}
-
 
 	});
 

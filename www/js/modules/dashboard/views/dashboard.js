@@ -25,6 +25,8 @@ define([
 		render: function() {
 			console.log("DashBoardView:render");
 
+			console.log(this.$el);
+
 			// Render the template
 			var compiledTemplate = _.template(htmlTemplate, {});
 			this.$el.html(compiledTemplate);

@@ -33,6 +33,8 @@ define([
 
 		indexAction: function(params) {
 			console.log("Catalog:Index:indexAction",params);
+			var index = new CatalogView({el:"#catalog"});
+				index.render();
 		}
 
 

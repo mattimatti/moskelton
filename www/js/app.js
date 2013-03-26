@@ -17,7 +17,9 @@ define([
 
   app = _.extend(app, {
 
-
+    layout : new Layout({
+        el: "#app"
+      }),
 
     // create modular structure
     module: function(additionalProps) {
@@ -54,10 +56,6 @@ define([
     // render the 
     ready: function() {
 
-      // the main layout of this app.
-      this.layout = new Layout({
-        el: "#app"
-      });
 
 
       // render the main layout
