@@ -17,9 +17,9 @@ define([
 
   app = _.extend(app, {
 
-    layout : new Layout({
-        el: "#app"
-      }),
+    layout: new Layout({
+      el: "#app"
+    }),
 
     // create modular structure
     module: function(additionalProps) {
@@ -31,12 +31,10 @@ define([
 
 
 
-
     main: function() {
       console.log("bootstrap main");
       this.loadConfig();
     },
-
 
 
 
@@ -46,7 +44,7 @@ define([
       console.log("loadConfig");
 
       var config = new ConfigModel();
-      config.on("add fetch reset change",this.ready,this);
+      config.on("add fetch reset change", this.ready, this);
       config.fetch();
 
     },
@@ -74,9 +72,51 @@ define([
       this.router.navigate(url, {
         trigger: trigger
       });
+    },
+
+
+
+    // Shows a given view
+    render: function(viewObject) {
+
+      console.log("=====app.render=====");
+
+
+      if(this.currentView){
+        this.currentView.remove();
+      }
+      
+     //viewObject.setElement(this.layout.el);
+
+      this.currentView = viewObject;
+
+
+      // append the element to the dom.
+      this.layout.$el.append(this.currentView.el);
+
+
+      // predispatch method
+      if (this.currentView.beforeRender){
+        this.currentView.beforeRender();
+      } 
+
+
+      // render the current view
+      this.currentView.render();
+      
+
+      
+
+
+
+      if (this.currentView.afterRender){
+        this.currentView.afterRender();
+      } 
+
+
+      console.log(this.currentView);
+
     }
-
-
 
 
 

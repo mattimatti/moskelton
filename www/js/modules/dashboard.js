@@ -33,8 +33,8 @@ define([
 			console.log("Dashboard:Index:indexAction",params);
 
 			
-			var index = new DashboardView({el:"#dashboard"});
-				index.render();
+			var index = new DashboardView();
+				app.render(index);
 
 
 		}

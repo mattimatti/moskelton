@@ -25,8 +25,8 @@ define([
 		indexAction: function(params) {
 			console.log("BookShelf:Index:indexAction",params);
 
-			var index = new BookShelfView({el:"#bookshelf"});
-				index.render();
+			var index = new BookShelfView();
+				app.render(index);
 		}
 
 	});

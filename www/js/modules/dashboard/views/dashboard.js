@@ -14,7 +14,6 @@ define([
 	var DashBoardView = Backbone.View.extend({
 
 
-
 		initialize: function() {
 			console.log("DashBoardView:initialize");
 

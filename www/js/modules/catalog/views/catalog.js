@@ -15,10 +15,13 @@ define([
 	var CatalogView = Backbone.View.extend({
 
 
+		views: {},
+
 
 		initialize: function() {
 			console.log("CatalogView:initialize");
 		},
+
 
 
 
@@ -30,11 +33,11 @@ define([
 			var compiledTemplate = _.template(htmlTemplate, {});
 			this.$el.html(compiledTemplate);
 
-			this.menu = new MenuView({
+			this.views.menu = new MenuView({
 				el: "#catalogmenu"
 			});
 
-			this.menu.render();
+			this.views.menu.render();
 
 
 
